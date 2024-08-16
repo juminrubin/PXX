@@ -1,15 +1,21 @@
 import os
 
-import pysqlite3
+import sqlite3
 import requests
+
+from constant import DB_FILE
+
+import pxx_util
 
 year = 2018
 
-# Create SQLite database
-conn = pysqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
-conn.row_factory = pysqlite3.Row
-conn.execute("""
-CREATE TABLE IF NOT EXISTS filings (
+app_util = pxx_util.AppUtil(year)
+table_name = app_util.get_fillings_table_name()
+# Connect SQLite database
+conn = sqlite3.connect(DB_FILE)
+conn.row_factory = sqlite3.Row
+conn.execute(f"""
+CREATE TABLE IF NOT EXISTS {table_name} (
     url TEXT PRIMARY KEY,
     filename TEXT,
     file_date TEXT,
@@ -21,8 +27,8 @@ CREATE TABLE IF NOT EXISTS filings (
 conn.commit()
 
 # Prepare directories
-os.makedirs('filings', exist_ok=True)
-os.makedirs('blocks', exist_ok=True)
+os.makedirs(app_util.get_fillings_folder_path(), exist_ok=True)
+os.makedirs(app_util.get_blocks_folder_path(), exist_ok=True)
 
 # Fetch search results and download filings
 session = requests.Session()
@@ -86,19 +92,19 @@ while True:
         # 0001104659-18-053437:a18-15410_5npx.htm -> 000110465918053437/a18-15410_5npx.htm
         url = f"https://www.sec.gov/Archives/edgar/data/{str(int(cik))}/{adsh.replace('-', '')}/{adsh}.txt"
         filename = f"{cik}-{adsh}.txt"
-        filepath = os.path.join("filings", filename)
+        filepath = os.path.join(app_util.get_fillings_folder_path(), filename)
         # Find the row by filename
         cu = conn.cursor()
-        cu.execute("SELECT * FROM filings WHERE url = ?", (url,))
+        cu.execute(f"SELECT * FROM {table_name} WHERE url = ?", (url,))
         if cu.fetchone():
             print(f"Updating {filename}")
             conn.execute(
-                "UPDATE filings SET filename = ?, cik = ?, display_name = ?, file_date = ? WHERE url = ?",
+                f"UPDATE {table_name} SET filename = ?, cik = ?, display_name = ?, file_date = ? WHERE url = ?",
                 (filename, cik, display_names, file_date, url)
             )
         else:
             conn.execute(
-                "INSERT INTO filings (url, filename, cik, display_name, file_date) VALUES (?, ?, ?, ?, ?)",
+                f"INSERT INTO {table_name} (url, filename, cik, display_name, file_date) VALUES (?, ?, ?, ?, ?)",
                 (url, filename, cik, display_names, file_date)
             )
         cu.close()

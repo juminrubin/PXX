@@ -2,6 +2,18 @@
 
 ## Install requirements
 
+* Python >= 3.9
+
 ```sh
 pip install requests html2text pysqlite3
+```
+
+### Setting up local Virtual Environment
+```sh
+python -m venv [PROJECT_FOLDER]\venv
+```
+
+## Running the program
+```sh
+python 
 ```

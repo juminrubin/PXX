@@ -1,11 +1,11 @@
 import os
-import pysqlite3
+import sqlite3
 
 year = 2018
 
 # Create SQLite database
-conn = pysqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
-conn.row_factory = pysqlite3.Row
+conn = sqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
+conn.row_factory = sqlite3.Row
 
 print("File date,Filing entity/person,Prop 1 vote,URL")
 # Export each filing in CSV format

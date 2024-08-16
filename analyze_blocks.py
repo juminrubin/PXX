@@ -1,10 +1,10 @@
 import os
 from ollama import Client
-import pysqlite3
+import sqlite3
 
 year = 2018
-conn = pysqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
-conn.row_factory = pysqlite3.Row
+conn = sqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
+conn.row_factory = sqlite3.Row
 
 prompt_prefix = """
 Instruction:
