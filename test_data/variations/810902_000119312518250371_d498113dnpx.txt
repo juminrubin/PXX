@@ -1,0 +1,135 @@
+<DOCUMENT>
+<TYPE>N-PX
+<SEQUENCE>1
+<FILENAME>d498113dnpx.txt
+<DESCRIPTION>BARON INVESTMENT FUNDS TRUST
+<TEXT>
+<PAGE>
+
+
+                                  UNITED STATES
+                       SECURITIES AND EXCHANGE COMMISSION
+                             WASHINGTON, D.C. 20549
+
+                                    FORM N-PX
+
+    ANNUAL REPORT OF PROXY VOTING RECORD OF REGISTERED MANAGEMENT INVESTMENT
+                                     COMPANY
+
+INVESTMENT COMPANY ACT FILE NUMBER:      811-05032
+
+NAME OF REGISTRANT:                      Baron Investment Funds Trust
+
+ADDRESS OF PRINCIPAL EXECUTIVE OFFICES:  767 Fifth Avenue, 49th Floor
+                                         New York, NY 10153
+
+NAME AND ADDRESS OF AGENT FOR SERVICE:   Patrick M. Patalino, General
+                                         Counsel
+                                         c/o Baron Investment Funds
+                                         Trust
+                                         767 Fifth Avenue, 49th Floor
+                                         New York, NY 10153
+
+REGISTRANT'S TELEPHONE NUMBER:           212-583-2000
+
+DATE OF FISCAL YEAR END:                 09/30
+
+Reporting Period: 07/01/2017 - 06/30/2018
+
+<PAGE>
+
+
+******************************* FORM N-Px REPORT *******************************
+
+ICA File Number: 811-05032
+Reporting Period: 07/01/2017 - 06/30/2018
+Baron Investments Funds Trust
+
+
+
+
+
+
+
+
+
+=============================== BARON ASSET FUND ===============================
+
+
+TESLA, INC.
+
+Ticker:       TSLA           Security ID:  88160R101
+Meeting Date: MAR 21, 2018   Meeting Type: Special
+Record Date:  FEB 07, 2018
+
+#     Proposal                                Mgt Rec   Vote Cast    Sponsor
+1     Approve Stock Option Grant to Elon Musk For       For          Management
+
+
+--------------------------------------------------------------------------------
+
+TESLA, INC.
+
+Ticker:       TSLA           Security ID:  88160R101
+Meeting Date: JUN 05, 2018   Meeting Type: Annual
+Record Date:  APR 12, 2018
+
+#     Proposal                                Mgt Rec   Vote Cast    Sponsor
+1.1   Elect Director Antonio Gracias          For       For          Management
+1.2   Elect Director James Murdoch            For       For          Management
+1.3   Elect Director Kimbal Musk              For       For          Management
+2     Ratify PricewaterhouseCoopers LLP as    For       For          Management
+      Auditors
+3     Require Independent Board Chairman      Against   Against      Shareholder
+4     Adopt Proxy Access Right                Against   Against      Shareholder
+
+
+============================ BARON OPPORTUNITY FUND ============================
+
+TESLA, INC.
+
+Ticker:       TSLA           Security ID:  88160R101
+Meeting Date: MAR 21, 2018   Meeting Type: Special
+Record Date:  FEB 07, 2018
+
+#     Proposal                                Mgt Rec   Vote Cast    Sponsor
+1     Approve Stock Option Grant to Elon Musk For       For          Management
+
+
+--------------------------------------------------------------------------------
+
+TESLA, INC.
+
+Ticker:       TSLA           Security ID:  88160R101
+Meeting Date: JUN 05, 2018   Meeting Type: Annual
+Record Date:  APR 12, 2018
+
+#     Proposal                                Mgt Rec   Vote Cast    Sponsor
+1.1   Elect Director Antonio Gracias          For       For          Management
+1.2   Elect Director James Murdoch            For       For          Management
+1.3   Elect Director Kimbal Musk              For       For          Management
+2     Ratify PricewaterhouseCoopers LLP as    For       For          Management
+      Auditors
+3     Require Independent Board Chairman      Against   Against      Shareholder
+4     Adopt Proxy Access Right                Against   Against      Shareholder
+
+
+========== END NPX REPORT
+
+<PAGE>
+
+
+SIGNATURES
+
+Pursuant to the requirements of the Investment Company Act of 1940, the
+registrant has duly caused this report to be signed on its behalf by the
+undersigned, thereunto duly authorized.
+
+(Registrant)         Baron Investment Funds Trust
+By (Signature)       /s/ Ron Baron
+Name                 Ron Baron
+Title                Chairman and CEO
+Date                 08/16/2018
+
+</TEXT>
+</DOCUMENT>
