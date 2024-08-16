@@ -2,46 +2,60 @@ import os
 from ollama import Client
 import sqlite3
 
+from constant import DB_FILE
+
+import pxx_util
+
 year = 2018
-conn = sqlite3.connect(os.environ.get('SQLITE_PATH', f'{year}.sqlite'))
-conn.row_factory = sqlite3.Row
+app_util = pxx_util.AppUtil(year)
+table_name = app_util.get_fillings_table_name()
 
-prompt_prefix = """
-Instruction:
-From the SEC filing input, extract the vote cast on TESLA, INC (ticker TSLA) issue/proposal number 1 on the 21-Mar-18 special meeting.
-Issue 1 is titled "Approve Grant of Performance-Based Stock Option Award" but another phrasing such as "Approve Stock Option Grant to Elon Musk" or "Approval of Performance Stock Option Agreement" may be used.
-Consider only the issue mentioned, disregard any other issues/proposals in the input.
-Consider only the actual vote, ignore any Management Recommendation.
-Your response must be a single word, do not explain your reasoning.
-Your response must be "For" or "Against", or "None" if no vote was cast on the specific proposal mentioned, "Multiple" if the input contains multiple instances of the same meeting dates and proposals, or "Absent" if the input is not relevant.
+conn = sqlite3.connect(DB_FILE)
+try:
+    conn.row_factory = sqlite3.Row
 
-Input:
-""".strip()
-prompt_suffix = """
-""".strip()
+    prompt_prefix = """
+    Instruction:
+    From the SEC filing input, extract the vote cast on TESLA, INC (ticker TSLA) issue/proposal number 1 on the 21-Mar-18 special meeting.
+    Issue 1 is titled "Approve Grant of Performance-Based Stock Option Award" but another phrasing such as "Approve Stock Option Grant to Elon Musk" or "Approval of Performance Stock Option Agreement" may be used.
+    Consider only the issue mentioned, disregard any other issues/proposals in the input.
+    Consider only the actual vote, ignore any Management Recommendation.
+    Your response must be a single word, do not explain your reasoning.
+    Your response must be "For" or "Against", or "None" if no vote was cast on the specific proposal mentioned, "Multiple" if the input contains multiple instances of the same meeting dates and proposals, or "Absent" if the input is not relevant.
+    
+    Input:
+    """.strip()
+    prompt_suffix = """
+    """.strip()
 
-client = Client(host=os.environ.get('OLLAMA_HOST', 'http://127.0.0.1:11434'))
+    client = Client(host=os.environ.get('OLLAMA_HOST', 'http://127.0.0.1:11434'))
 
-# For every filing in sqlite:
-for row in conn.execute('SELECT * FROM filings WHERE prop1 is NULL'):
-    print(f"{row['prop1']}: {row['url']}")
-    if row['prop1'] is not None:
-        break
-    url = row['url']
-    filename = row['filename'].replace('.htm', '.txt')
-    with open(f'blocks/{filename}') as f:
-        content = f.read()
-    content = prompt_prefix + "\n" + content + "\n" + prompt_suffix
-    response = client.chat(model='llama3:70b', messages=[
-        {
-            'role': 'user',
-            'content': content,
-        },
-    ])
-    vote = response['message']['content']
-    print(f"{filename}: {vote}")
-    vote = vote.lower().strip()
-    # Validate and store vote
-    if vote in ['for', 'against', 'none']:
-        conn.execute('UPDATE filings SET prop1 = ? WHERE url = ?', (vote, url))
-        conn.commit()
+    # For every filing in sqlite:
+    for row in conn.execute(f'SELECT * FROM {table_name} WHERE prop1 is NULL'):
+        print(f"{row['prop1']}: {row['url']}")
+        if row['prop1'] is not None:
+            break
+        url = row['url']
+        filename = row['filename'].replace('.htm', '.txt')
+        with open(os.path.join(app_util.get_blocks_folder_path(), f'{filename}')) as f:
+            content = f.read()
+        content = prompt_prefix + "\n" + content + "\n" + prompt_suffix
+        response = client.chat(model='llama3:70b', messages=[
+            {
+                'role': 'user',
+                'content': content,
+            },
+        ])
+        vote = response['message']['content']
+        print(f"{filename}: {vote}")
+        vote = vote.lower().strip()
+        # Validate and store vote
+        if vote in ['for', 'against', 'none']:
+            conn.execute(f'UPDATE {table_name} SET prop1 = ? WHERE url = ?', (vote, url))
+            conn.commit()
+
+except BaseException as e:
+    print(f"An error occurred: {e}")
+
+finally:
+    conn.commit()
